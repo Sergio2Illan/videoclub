@@ -17,6 +17,7 @@ body{
 }
 
 .container{
+    padding-block: 20px;
     width: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -28,6 +29,8 @@ body{
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .container h3{

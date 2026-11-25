@@ -1,9 +1,26 @@
 const container = document.getElementById('container')
+let pages = 1
+
+const functionObserver = (entradas) =>{
+    entradas.forEach(entrada =>{
+        if(entrada.isIntersecting){
+            pages++
+            loadMovies()
+        }
+    })
+}
+
+let observer = new IntersectionObserver(functionObserver,{
+    rootMargin: '0px 0px 300px 0px',
+    threshold: 1.0
+})
+
+
 
 const loadMovies = async ()=>{
 
     try {
-        const response  = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=XXXXXXXXXXXXXXXXXXXXX&page=1')
+        const response  = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=XXXXXXXXXXXXXXXXX&page=${pages}`)
 
         console.log(response)
 
@@ -13,10 +30,12 @@ const loadMovies = async ()=>{
 
         const data = await response.json()
 
-        console.log('*************====> ', data)
-
-            showData(data.results)
+        showData(data.results)
         
+
+        const allMovies = document.querySelectorAll('.pelicula')
+        const lastMovie = allMovies[allMovies.length - 1]
+        observer.observe(lastMovie)
 
     } catch (error) {
         console.log('****************=> ',error)
@@ -24,7 +43,7 @@ const loadMovies = async ()=>{
 }
 
 
-function showData(peliculas){
+const showData = (peliculas) => {
 
     peliculas.forEach(pelicula => {
         container.innerHTML += `
